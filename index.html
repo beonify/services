@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Services | Beonify Entertainment</title>
+    <meta name="description" content="Explore Beonify's professional creative services: Graphic Design, Music Distribution, Video Production, and more.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CORE THEME (Matches Home) --- */
+        :root {
+            --bg-color: #050505;
+            --text-main: #ffffff;
+            --text-muted: #8e8e93;
+            --glass-bg: rgba(20, 20, 22, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(44, 44, 46, 0.6);
+            --accent-primary: #0a84ff;
+            --accent-secondary: #bf5af2;
+            --radius-md: 16px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f2f2f7;
+            --text-main: #1c1c1e;
+            --text-muted: #636366;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --card-bg: rgba(255, 255, 255, 0.8);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; transition: background 0.4s; }
+        a { text-decoration: none; color: inherit; }
+        button { border: none; background: none; cursor: pointer; color: inherit; }
+
+        /* Icon Styling */
+        .icon { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .icon-fill { fill: currentColor; stroke: none; }
+
+        /* Background Blobs */
+        .ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.35; }
+        .blob-1 { width: 45vw; height: 45vw; background: var(--accent-primary); top: -10%; left: -10%; }
+        .blob-2 { width: 35vw; height: 35vw; background: var(--accent-secondary); bottom: -10%; right: -10%; }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 1200px; padding: 12px 24px;
+            background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 100px;
+            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+        }
+        .logo { font-weight: 900; font-size: 1.1rem; letter-spacing: -0.5px; }
+        .desktop-links { display: flex; gap: 30px; list-style: none; }
+        .desktop-links a { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); transition: 0.3s; }
+        .desktop-links a:hover, .active { color: var(--text-main) !important; }
+        .hamburger { display: none; }
+
+        /* Content Layout */
+        .content-wrapper { padding: 140px 20px 60px; max-width: 1200px; margin: 0 auto; }
+        .header-area { text-align: center; margin-bottom: 70px; }
+        .header-area h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; }
+        .header-area span { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; }
+        
+        /* Service Cards */
+        .service-card {
+            background: var(--card-bg); border: 1px solid var(--glass-border);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border-radius: 28px; padding: 40px; 
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s;
+            display: flex; flex-direction: column;
+        }
+        .service-card:hover { transform: translateY(-10px); border-color: var(--accent-primary); }
+        
+        .card-icon-box { 
+            width: 54px; height: 54px; background: rgba(128,128,128,0.1); 
+            border-radius: 16px; display: flex; align-items: center; 
+            justify-content: center; margin-bottom: 25px; color: var(--accent-primary); 
+        }
+        
+        .service-card h3 { margin-bottom: 15px; font-size: 1.6rem; font-weight: 700; }
+        .service-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;}
+        
+        /* Tag List (The "Pills") */
+        .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+        .tag { 
+            font-size: 0.7rem; background: rgba(128,128,128,0.08); 
+            padding: 6px 12px; border-radius: 8px; color: var(--text-muted); 
+            border: 1px solid var(--glass-border); font-weight: 500;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color); backdrop-filter: blur(30px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 2000; opacity: 0; pointer-events: none; transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .mobile-menu-overlay.active { opacity: 1; pointer-events: all; }
+        .mobile-links { list-style: none; text-align: center; }
+        .mobile-links li { margin: 25px 0; font-size: 2rem; font-weight: 800; letter-spacing: -1px; }
+
+        .footer { text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 0.8rem; letter-spacing: 1px; }
+
+        @media (max-width: 768px) {
+            .desktop-links { display: none; }
+            .hamburger { display: block; }
+            .header-area h1 { font-size: 2.8rem; }
+            .services-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <nav>
+        <a href="index.html" class="logo">BEONIFY.</a>
+        <ul class="desktop-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#" class="active">Services</a></li>
+            <li><a href="#">Work Station</a></li>
+            <li><a href="#">Testimonials</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button id="themeToggle" aria-label="Toggle Theme">
+                <svg id="themeIcon" class="icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <button class="hamburger" id="menuToggle">
+                <svg class="icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <button id="closeMenu" style="position:absolute; top:35px; right:35px;">
+            <svg class="icon" style="width:32px; height:32px;" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <ul class="mobile-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Work Station</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+
+    <main class="content-wrapper">
+        <header class="header-area">
+            <h1>Our <span>Services.</span></h1>
+            <p>Premium creative engineering for the modern entertainment industry.</p>
+        </header>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="card-icon-box">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+                </div>
+                <h3>Graphic Design</h3>
+                <p>Visual storytelling across every medium imaginable.</p>
+                <div class="tag-list">
+                    <span class="tag">Music Art Covers</span><span class="tag">Birthday Designs</span><span class="tag">Party Posters</span><span class="tag">Show Tickets</span><span class="tag">Show Design</span><span class="tag">Logo Design</span><span class="tag">EP Art</span><span class="tag">Mixtape Covers</span><span class="tag">Event Banners</span><span class="tag">Business Cards</span><span class="tag">Letterheads</span><span class="tag">Social Media Kits</span><span class="tag">YouTube Thumbnails</span><span class="tag">Podcast Art</span><span class="tag">Twitch Overlays</span><span class="tag">3D Typography</span><span class="tag">Vector Illustration</span><span class="tag">Brand Identity</span><span class="tag">Flyers</span><span class="tag">Brochures</span><span class="tag">Magazines</span><span class="tag">Book Covers</span><span class="tag">UI Layouts</span><span class="tag">App Icons</span><span class="tag">Product Packaging</span><span class="tag">Label Design</span><span class="tag">Wedding Stationery</span><span class="tag">Funeral Programs</span><span class="tag">Church Media</span><span class="tag">Infographics</span><span class="tag">Press Kits</span><span class="tag">Presentation Decks</span><span class="tag">NFT Design</span><span class="tag">Merchandise Art</span><span class="tag">Apparel Design</span><span class="tag">Stickers</span><span class="tag">Billboard Design</span><span class="tag">Signage</span><span class="tag">Menu Design</span><span class="tag">Email Templates</span><span class="tag">CV/Resume Layout</span><span class="tag">Stationery Kits</span><span class="tag">Photo Retouching</span><span class="tag">Background Removal</span><span class="tag">Digital Painting</span><span class="tag">Concept Art</span><span class="tag">Stream Graphics</span><span class="tag">Ad Creatives</span><span class="tag">Catalog Design</span><span class="tag">Certificate Design</span><span class="tag">etc.</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="card-icon-box">
+                    <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+                <h3>Music Distribution</h3>
+                <p>Global reach. We place your music on 150+ platforms worldwide.</p>
+                <div class="tag-list">
+                    <span class="tag">Spotify</span><span class="tag">Apple Music</span><span class="tag">YouTube Music</span><span class="tag">TikTok Audio</span><span class="tag">Amazon Music</span><span class="tag">Deezer</span><span class="tag">Tidal</span><span class="tag">Boomplay</span><span class="tag">Audiomack</span><span class="tag">Instagram Audio</span><span class="tag">Pandora</span><span class="tag">Shazam</span><span class="tag">iHeartRadio</span><span class="tag">Napster</span><span class="tag">RouteNote Premium</span><span class="tag">Amuse Pro Setup</span><span class="tag">DistroKid Mgmt</span><span class="tag">TuneCore Admin</span><span class="tag">Content ID</span><span class="tag">Royalties Tracking</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="card-icon-box">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                </div>
+                <h3>Video Production</h3>
+                <p>From frame to screen. High-definition cinematic visuals.</p>
+                <div class="tag-list">
+                    <span class="tag">Music Videos</span><span class="tag">Professional Shooting</span><span class="tag">Cinematic Editing</span><span class="tag">Cartoon Animation</span><span class="tag">Lyric Videos</span><span class="tag">Birthday Cinematics</span><span class="tag">Event Coverage</span><span class="tag">VFX</span><span class="tag">Color Grading</span><span class="tag">Drone Footage</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="card-icon-box">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                </div>
+                <h3>Music Production</h3>
+                <p>Sonic excellence. Crafting the sound of the next generation.</p>
+                <div class="tag-list">
+                    <span class="tag">Beat Making</span><span class="tag">Vocal Recording</span><span class="tag">Mixing</span><span class="tag">Mastering</span><span class="tag">Sound Design</span><span class="tag">Audio Branding</span>
+                </div>
+            </div>
+
+            <div class="service-card" style="border-color: var(--accent-secondary);">
+                <div class="card-icon-box" style="color: var(--accent-secondary);">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                </div>
+                <h3>Ads & Growth</h3>
+                <p>Strategic boosting to ensure your talent gets the eyes it deserves.</p>
+                <div class="tag-list">
+                    <span class="tag">Social Media Boosting</span><span class="tag">Facebook Ads</span><span class="tag">Instagram Ads</span><span class="tag">YouTube Growth</span><span class="tag">TikTok Marketing</span><span class="tag">Collaborations</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        &copy; 2026 BEONIFY STUDIO. ALL RIGHTS RESERVED.
+    </footer>
+
+    <script>
+        // --- Mobile Menu Toggle ---
+        const menuBtn = document.getElementById('menuToggle');
+        const closeBtn = document.getElementById('closeMenu');
+        const menu = document.getElementById('mobileMenu');
+        
+        menuBtn.onclick = () => menu.classList.add('active');
+        closeBtn.onclick = () => menu.classList.remove('active');
+
+        // --- Theme Toggle Logic ---
+        const themeBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        themeBtn.onclick = () => {
+            const current = document.body.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            
+            // Toggle SVG Icon Path
+            if(newTheme === 'light') {
+                themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+            } else {
+                themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+            }
+        };
+    </script>
+</body>
+</html>
