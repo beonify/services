@@ -13,25 +13,17 @@
 
     <style>
         /* --- CORE THEME (Matches Home) --- */
+                /* --- CORE THEME (Locked to Light) --- */
         :root {
-            --bg-color: #050505;
-            --text-main: #ffffff;
-            --text-muted: #8e8e93;
-            --glass-bg: rgba(20, 20, 22, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --card-bg: rgba(44, 44, 46, 0.6);
-            --accent-primary: #0a84ff;
-            --accent-secondary: #bf5af2;
-            --radius-md: 16px;
-        }
-
-        [data-theme="light"] {
             --bg-color: #f2f2f7;
             --text-main: #1c1c1e;
             --text-muted: #636366;
             --glass-bg: rgba(255, 255, 255, 0.7);
             --glass-border: rgba(255, 255, 255, 0.5);
             --card-bg: rgba(255, 255, 255, 0.8);
+            --accent-primary: #0a84ff;
+            --accent-secondary: #bf5af2;
+            --radius-md: 16px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -119,27 +111,23 @@
         }
     </style>
 </head>
-<body data-theme="dark">
+<body>
 
     <div class="ambient-bg">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
     </div>
-
     <nav>
         <a href="index.html" class="logo">BEONIFY.</a>
         <ul class="desktop-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#">About Us</a></li>
+            <li><a href="https://beonify.github.io/beonify/">Home</a></li>
+            <li><a href="https://beonify.github.io/aboutus/">About Us</a></li>
             <li><a href="#" class="active">Services</a></li>
-            <li><a href="#">Work Station</a></li>
-            <li><a href="#">Testimonials</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="https://beonify.github.io/workstation/">Work Station</a></li>
+            <li><a href="https://beonify.github.io/testimonials/">Testimonials</a></li>
+            <li><a href="contact">Contact</a></li>
         </ul>
         <div style="display: flex; gap: 20px; align-items: center;">
-            <button id="themeToggle" aria-label="Toggle Theme">
-                <svg id="themeIcon" class="icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            </button>
             <button class="hamburger" id="menuToggle">
                 <svg class="icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
@@ -152,10 +140,11 @@
         </button>
         <ul class="mobile-links">
             <li><a href="https://beonify.github.io/beonify/">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Work Station</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="https://beonify.github.io/aboutus/">About Us</a></li>
+            <li><a href="#" class="active">Services</a></li>
+            <li><a href="https://beonify.github.io/workstation/">Work Station</a></li>
+            <li><a href="https://beonify.github.io/testimonials/">Testimonials</a></li>
+            <li><a href="contact">Contact</a></li>
         </ul>
     </div>
 
@@ -235,23 +224,6 @@
         
         menuBtn.onclick = () => menu.classList.add('active');
         closeBtn.onclick = () => menu.classList.remove('active');
-
-        // --- Theme Toggle Logic ---
-        const themeBtn = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        
-        themeBtn.onclick = () => {
-            const current = document.body.getAttribute('data-theme');
-            const newTheme = current === 'dark' ? 'light' : 'dark';
-            document.body.setAttribute('data-theme', newTheme);
-            
-            // Toggle SVG Icon Path
-            if(newTheme === 'light') {
-                themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
-            } else {
-                themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
-            }
-        };
     </script>
 </body>
 </html>
